@@ -11,9 +11,8 @@ const criarUsuario = async (req, res) => {
     }
 };
 
-const teste = () => { }
+
 
 module.exports = {
-    criarUsuario,
-    teste
+    criarUsuario
 }

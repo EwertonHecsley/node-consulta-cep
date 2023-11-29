@@ -13,7 +13,17 @@ const criarUsuario = async (nome, email, senha) => {
     return usuario;
 };
 
+const buscarUsuarioEmail = async (email) => {
+    const usuario = await prisma.usuarios.findMany({
+        where: {
+            email
+        }
+    });
+    return usuario[0].email;
+};
+
 module.exports = {
-    criarUsuario
+    criarUsuario,
+    buscarUsuarioEmail
 }
 

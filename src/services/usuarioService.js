@@ -5,7 +5,8 @@ const { format } = require('date-fns')
 const criarUsuario = async (nome, email, senha) => {
     const senhaHash = await bcrypt.hash(senha, 8);
     const usuario = await usuarioModel.criarUsuario(nome, email, senhaHash);
-    return usuario;
+    const { senha: _, data_atualizacao: __, data_criacao: ___, ...usuarioFormatado } = usuario
+    return usuarioFormatado;
 };
 
 const buscarTodosUsuarios = async () => {
@@ -20,7 +21,16 @@ const buscarTodosUsuarios = async () => {
     return arrayNovoResult;
 };
 
+const buscarUsuarioId = async (id) => {
+    const usuario = await usuarioModel.buscarUsuarioId(id);
+    usuario.data_criacao = format(usuario.data_criacao, 'dd/MM/yyyy');
+    usuario.data_atualizacao = format(usuario.data_atualizacao, 'dd/MM/yyyy');
+    const { senha: _, ...usuarioFormatado } = usuario
+    return usuarioFormatado;
+};
+
 module.exports = {
     criarUsuario,
-    buscarTodosUsuarios
+    buscarTodosUsuarios,
+    buscarUsuarioId
 };

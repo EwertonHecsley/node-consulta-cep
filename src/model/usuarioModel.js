@@ -13,6 +13,15 @@ const criarUsuario = async (nome, email, senha) => {
     return usuario;
 };
 
+const buscarUsuarioId = async (id) => {
+    const usuario = await prisma.usuarios.findUnique({
+        where: {
+            id
+        }
+    });
+    return usuario;
+};
+
 const buscarUsuarioEmail = async (email) => {
     const usuario = await prisma.usuarios.findMany({
         where: {
@@ -30,6 +39,7 @@ const buscarTodosUsuarios = async () => {
 module.exports = {
     criarUsuario,
     buscarUsuarioEmail,
-    buscarTodosUsuarios
+    buscarTodosUsuarios,
+    buscarUsuarioId
 }
 

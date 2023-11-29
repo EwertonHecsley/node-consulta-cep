@@ -4,8 +4,7 @@ const criarUsuario = async (req, res) => {
     const { nome, email, senha } = req.body;
     try {
         const usuario = await usuarioService.criarUsuario(nome, email, senha);
-        const { senha: _, data_atualizacao: __, data_criacao: ___, ...usuarioFormatado } = usuario
-        return res.status(201).json(usuarioFormatado);
+        return res.status(201).json(usuario);
     } catch (error) {
         return res.status(500).json({ mensagem: 'Erro interno do servidor', error: error.message });
     }
@@ -20,8 +19,18 @@ const buscarTodosUsuarios = async (_req, res) => {
     }
 };
 
+const buscarUsuarioId = async (req, res) => {
+    const usuario_id = parseInt(req.params.id);
+    try {
+        const usuario = await usuarioService.buscarUsuarioId(usuario_id);
+        return res.status(200).json(usuario);
+    } catch (error) {
+        return res.status(500).json({ mensagem: 'Erro interno do servidor', error: error.message });
+    }
+};
 
 module.exports = {
     criarUsuario,
-    buscarTodosUsuarios
+    buscarTodosUsuarios,
+    buscarUsuarioId
 }

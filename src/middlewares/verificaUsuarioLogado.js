@@ -1,16 +1,21 @@
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
+const usuarioModel = require('../model/usuarioModel');
 
 const validarToken = async (req, res, next) => {
     const { authorization } = req.headers;
     try {
-        if (!authorization) return res.status(401).json({ mensagem: 'Usuário não autorizado' });
+        if (!authorization) return res.status(401).json({ mensagem: 'Para ter acesso completo, um token váldo deve ser informado.' });
 
         const token = authorization.split(' ')[1];
 
-        const { id } = jwt.verify(token, process.env.JWT_TOKEN);
+        const { id } = jwt.verify(token, process.env.JWT_KEY);
 
         if (!id) return res.status(401).json({ mensagem: 'Usuário não autorizado' });
+
+        const usuario = await usuarioModel.buscarUsuarioId(id);
+
+        req.usuario = usuario
 
         next()
     } catch (error) {

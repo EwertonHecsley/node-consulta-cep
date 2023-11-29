@@ -28,7 +28,7 @@ const buscarUsuarioEmail = async (email) => {
             email
         }
     });
-    return usuario[0].email;
+    return usuario;
 };
 
 const buscarTodosUsuarios = async () => {

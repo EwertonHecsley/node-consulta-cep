@@ -7,6 +7,14 @@ const verificaEmailExistente = async (req, res, next) => {
     next();
 };
 
+const verificaExistenciaID = async (req, res, next) => {
+    const usuario_id = parseInt(req.params.id);
+    const buscarUsuario = await usuarioModel.buscarUsuarioId(usuario_id);
+    if (!buscarUsuario) return res.status(404).json({ mensagem: 'Usuário não encontrado com esse ID.' });
+    next();
+};
+
 module.exports = {
-    verificaEmailExistente
+    verificaEmailExistente,
+    verificaExistenciaID
 }

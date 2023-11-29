@@ -11,8 +11,17 @@ const criarUsuario = async (req, res) => {
     }
 };
 
+const buscarTodosUsuarios = async (_req, res) => {
+    try {
+        const result = await usuarioService.buscarTodosUsuarios();
+        return res.status(200).json(result);
+    } catch (error) {
+        return res.status(500).json({ mensagem: 'Erro interno do servidor', error: error.message });
+    }
+};
 
 
 module.exports = {
-    criarUsuario
+    criarUsuario,
+    buscarTodosUsuarios
 }

@@ -22,8 +22,14 @@ const buscarUsuarioEmail = async (email) => {
     return usuario[0].email;
 };
 
+const buscarTodosUsuarios = async () => {
+    const result = await prisma.usuarios.findMany();
+    return result;
+};
+
 module.exports = {
     criarUsuario,
-    buscarUsuarioEmail
+    buscarUsuarioEmail,
+    buscarTodosUsuarios
 }
 

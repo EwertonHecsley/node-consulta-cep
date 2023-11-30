@@ -25,6 +25,12 @@ const cadastrarDadosLocalizacao = async (NumeroCep, id) => {
     return result;
 };
 
+const buscarTodasLocalizacoes = async () => {
+    const result = await localizacaoModel.buscarTodasLocalizacoes();
+    return result;
+};
+
 module.exports = {
-    cadastrarDadosLocalizacao
+    cadastrarDadosLocalizacao,
+    buscarTodasLocalizacoes
 }

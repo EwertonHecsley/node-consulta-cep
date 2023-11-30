@@ -11,6 +11,16 @@ const cadastrarDadosLocalizacao = async (req, res) => {
     };
 };
 
+const buscarTodasLocalizacoes = async (_req, res) => {
+    try {
+        const result = await localizacaoService.buscarTodasLocalizacoes();
+        return res.status(200).json(result);
+    } catch (error) {
+        return res.status(500).json({ mensagem: error.message });
+    };
+};
+
 module.exports = {
-    cadastrarDadosLocalizacao
-}
+    cadastrarDadosLocalizacao,
+    buscarTodasLocalizacoes
+};

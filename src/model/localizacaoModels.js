@@ -17,6 +17,12 @@ const cadastrarDadosLocalizacao = async (usuario_id, cep, estado, cidade, bairro
     return resultado;
 };
 
+const buscarTodasLocalizacoes = async () => {
+    const result = await prisma.localizacoes.findMany();
+    return result;
+};
+
 module.exports = {
-    cadastrarDadosLocalizacao
+    cadastrarDadosLocalizacao,
+    buscarTodasLocalizacoes
 }

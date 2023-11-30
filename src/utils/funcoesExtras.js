@@ -27,7 +27,6 @@ const enderecoNoRaio = async (arrEnderecos, latitudeReference, longitudeReferenc
             latitude,
             longitude
         );
-        console.log(distancia);
         return distancia <= radiusKm;
     });
 };

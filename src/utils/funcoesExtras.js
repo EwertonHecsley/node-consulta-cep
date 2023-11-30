@@ -1,39 +1,35 @@
-const math = require('mathjs');
-
-const haversine = (lat1, lon1, lat2, lon2, raioKm) => {
-    if (isNaN(lat1) || isNaN(lon1) || isNaN(lat2) || isNaN(lon2) || isNaN(raioKm)) {
-        throw new Error('As coordenadas e o raio fornecidos devem ser números válidos.');
-    }
-
+const haversine = (latitude1, longitude1, latitude2, longitude2) => {
     const toRadians = (deg) => deg * (Math.PI / 180);
-    lat1 = toRadians(lat1);
-    lon1 = toRadians(lon1);
-    lat2 = toRadians(lat2);
-    lon2 = toRadians(lon2);
+    const latitude1_rad = toRadians(latitude1);
+    const longitude1_rad = toRadians(longitude1);
+    const latitude2_rad = toRadians(latitude2);
+    const longitude2_rad = toRadians(longitude2);
 
-    const dlat = lat2 - lat1;
-    const dlon = lon2 - lon1;
+    const d = 2 * 6371 * Math.asin(
+        Math.sqrt(
+            Math.sin(latitude2_rad - latitude1_rad) ** 2
+            / Math.cos(latitude1_rad) ** 2 * Math.cos(latitude2_rad) ** 2
+            + Math.cos(longitude2_rad - longitude1_rad) ** 2
+        )
+    );
 
-    const a = Math.sin(dlat / 2) ** 2 + Math.cos(lat1) * Math.cos(lat2) * Math.sin(dlon / 2) ** 2;
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-
-    const distancia = 6371.0 * c;
-
-    return distancia;
+    return d / 1000;
 };
 
-const enderecoNoRaio = async (arrEnderecos, latRef, longRef, raioKm) => {
-    const enderecosNoRaio = [];
-
-    for (const endereco of arrEnderecos) {
-        const { lat, long } = endereco;
-        const distancia = haversine(latRef, longRef, lat, long, raioKm);
+const enderecoNoRaio = async (arrEnderecos, latitudeReference, longitudeReference, radiusKm) => {
+    return arrEnderecos.filter((coordenada) => {
+        const { lat, long } = coordenada;
+        const latitude = parseFloat(lat);
+        const longitude = parseFloat(long);
+        const distancia = haversine(
+            latitudeReference,
+            longitudeReference,
+            latitude,
+            longitude
+        );
         console.log(distancia);
-        if (distancia <= raioKm) {
-            enderecosNoRaio.push(endereco);
-        };
-    };
-    return enderecosNoRaio;
+        return distancia <= radiusKm;
+    });
 };
 
-module.exports = { enderecoNoRaio };
+module.exports = { enderecoNoRaio }

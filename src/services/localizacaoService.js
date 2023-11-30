@@ -2,7 +2,7 @@ const localizacaoModel = require('../model/localizacaoModels');
 const buscaCep = require('cep-promise');
 require('dotenv').config();
 const axios = require('axios');
-
+const funcaoExtra = require('../utils/funcoesExtras');
 
 const endPoint = process.env.ENDPOINT_MAPS;
 const api_key = process.env.API_MAPS_KEY;
@@ -25,9 +25,18 @@ const cadastrarDadosLocalizacao = async (NumeroCep, id) => {
     return result;
 };
 
-const buscarTodasLocalizacoes = async () => {
+const buscarTodasLocalizacoes = async (obj) => {
     const result = await localizacaoModel.buscarTodasLocalizacoes();
-    return result;
+
+    if (Object.keys(obj).length === 0) {
+        return result;
+    };
+
+    const { cep, raio } = obj;
+    const dados = await axios.get(`${endPoint}=${cep},paraiba&key=${api_key}`);
+    const { lat, lng } = dados.data.results[0].geometry;
+    const novoResult = funcaoExtra.enderecoNoRaio(result, lat, lng, raio);
+    return novoResult;
 };
 
 module.exports = {

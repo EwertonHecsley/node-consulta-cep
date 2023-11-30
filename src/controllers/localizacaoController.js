@@ -11,9 +11,9 @@ const cadastrarDadosLocalizacao = async (req, res) => {
     };
 };
 
-const buscarTodasLocalizacoes = async (_req, res) => {
+const buscarTodasLocalizacoes = async (req, res) => {
     try {
-        const result = await localizacaoService.buscarTodasLocalizacoes();
+        const result = await localizacaoService.buscarTodasLocalizacoes(req.query);
         return res.status(200).json(result);
     } catch (error) {
         return res.status(500).json({ mensagem: error.message });

@@ -15,6 +15,7 @@ model Usuarios {
   data_criacao     DateTime       @default(now())
   data_atualizacao DateTime       @updatedAt
   Localizacoes     Localizacoes[]
+  Historicos       Historicos[]
 
   @@map("usuarios")
 }
@@ -34,4 +35,16 @@ model Localizacoes {
   data_atualizacao DateTime @updatedAt
 
   @@map("localizacoes")
+}
+
+model Historicos {
+  id                Int      @id @default(autoincrement())
+  usuario_id        Int
+  data_consulta     DateTime
+  hora_consulta     DateTime
+  cep               String
+  raio_especificado String
+  usuario           Usuarios @relation(fields: [usuario_id], references: [id])
+
+  @@map("historicos")
 }

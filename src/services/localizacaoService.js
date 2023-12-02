@@ -35,7 +35,6 @@ const buscarTodasLocalizacoes = async (obj) => {
     const { cep, estado, raio } = obj;
     const dados = await axios.get(`${endPoint}=${cep},${estado}&key=${api_key}`);
     const { lat, lng } = dados.data.results[0].geometry;
-    console.log(lat, lng);
     const novoResult = funcaoExtra.enderecoNoRaio(result, lat, lng, raio);
     return novoResult;
 };

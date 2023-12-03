@@ -40,8 +40,8 @@ model Localizacoes {
 model Historicos {
   id                Int      @id @default(autoincrement())
   usuario_id        Int
-  data_consulta     DateTime
-  hora_consulta     DateTime
+  data_consulta     String
+  hora_consulta     String
   cep               String
   raio_especificado String
   usuario           Usuarios @relation(fields: [usuario_id], references: [id])

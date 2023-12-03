@@ -173,6 +173,3 @@ A página de histórico apresenta as consultas anteriores em forma de lista ou t
     }
 ]
 ```
-
-
-

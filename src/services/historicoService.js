@@ -8,7 +8,13 @@ const criarHistorico = async (usuario_id, cep, raio_especificado, data_consulta,
     return result;
 };
 
+const listarHistoricoUsuarioLogado = async (id) => {
+    const result = await historicoModel.listarHistoricoUsuarioLogado(id);
+    return result;
+};
+
 module.exports = {
-    criarHistorico
+    criarHistorico,
+    listarHistoricoUsuarioLogado
 };
 
